@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Hangman</title>
+</head>
+<body>
+
+<h1> Press a letter from a to z to guess the correct word</h1>
+
+<div id="lives"></div>
+
+<div id="game">
+	<button id="reset"> reset </button>
+</div>
+
+<script type="text/javascript">
+	
+	var computerChoices = ["fox", "soy", "ore", "toy"];
+	var lives = 5;
+	var letters = [];
+	var wins = 0;
+	var losses = 0;
+	var numOfAttempts = 3;
+	var reset = document.getElementById("reset");
+	// var html = "<p>remaining lives: " + lives + "</p>" +
+	      
+	      // "<p>Press r, p or s to start playing!</p>" +
+          
+          // "<p>losses: " + losses + "</p>" +
+          // "<p>ties: " + ties + "</p>";
+    var targetDiv = document.getElementById("lives");
+    targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                          "<p>losses: " + losses + "</p>" +
+                          "<p>wins: " + wins + "</p>";
+                            
+
+                                                                  ;
+    
+    // document.querySelector("#lives").innerHTML = html;
+    
+    document.onkeyup = function(event) {
+
+        var userGuess = event.key;
+        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+        
+        for (var i = 0; i < computerGuess.length; i++) {
+          	var dashes = computerGuess.replace(computerGuess[i], " - ");
+          	
+            targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                                  "<p>losses: " + losses + "</p>" +
+                                  "<p>wins: " + wins + "</p>" +
+                                   "<p>" + dashes + "</p>";
+                                   
+
+            if (userGuess === computerGuess[i]) {
+              alert("great choice ");
+              letters.push(userGuess);
+              targetDiv.innerHTML =   "<p>remaining lives: " + lives + "</p>" +
+                                      "<p>losses: " + losses + "</p>" +
+                                      "<p>wins: " + wins + "</p>" +
+                                      "<p>letters gussed so far: " + letters + "</p>" +
+                                      "<p>" + dashes.replace(" - ", userGuess) + "</p>";
+                                     
+
+
+             } 
+             else {
+             	alert("try again");
+             	lives--;
+             	letters.push(userGuess); 
+                targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                                      "<p>losses: " + losses + "</p>" +
+                                      "<p>wins: " + wins + "</p>" +
+                                      "<p>letters gussed so far: " + letters + "</p>";
+             }
+             
+            if (userGuess === computerGuess) {
+             	wins++;
+            }
+
+            if (lives === 0) {
+             	losses++;
+             	numOfAttempts--;
+             	alert("AttemptsLeft: " + numOfAttempts);
+
+            }
+            
+            if (numOfAttempts < 1) {
+            	alert("game over");
+            	alert("press reset to play again");
+
+            }
+              
+        }
+
+       
+
+        // alert("user guess: " + userGuess);
+        // alert("computer guess: " + computerGuess);
+
+    };
+
+    reset.onclick = function() {
+    	lives = 5;
+    	losses = 0;
+    	wins = 0;
+    	letters = [];
+    	numOfAttempts = 3;
+    	targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                          "<p>losses: " + losses + "</p>" +
+                          "<p>wins: " + wins + "</p>";
+
+
+    }
+       
+
+</script>
+</body>
+</html>
