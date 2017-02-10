@@ -5,7 +5,9 @@
 </head>
 <body>
 
-<h1> Press a letter from a to z to guess the correct word</h1>
+
+<h1><span>Hangman</span></h1>
+<h2> Press a letter from a to z to guess the correct word</h2>
 
 <div id="lives"></div>
 
@@ -13,6 +15,20 @@
 	<button id="reset"> reset </button>
   <button id="nextword"> guess next word </button>
 </div>
+
+<style type="text/css">
+  h1 {font:bold;
+      text-align:center;
+      color: blue;
+      background: yellow;
+  }
+
+  h2 {
+    text-align:center;
+  }
+ 
+
+</style>
 
 <script type="text/javascript">
 	var userGuess;
