@@ -11,108 +11,120 @@
 
 <div id="game">
 	<button id="reset"> reset </button>
+  <button id="nextword"> guess next word </button>
 </div>
 
 <script type="text/javascript">
-	
+	var userGuess;
 	var computerChoices = ["fox", "soy", "ore", "toy"];
+  var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+  var dashes = ["-","-","-"];
+  var letters = [];
 	var lives = 5;
-	var letters = [];
 	var wins = 0;
-	var losses = 0;
-	var numOfAttempts = 3;
-	var reset = document.getElementById("reset");
-	// var html = "<p>remaining lives: " + lives + "</p>" +
-	      
-	      // "<p>Press r, p or s to start playing!</p>" +
-          
-          // "<p>losses: " + losses + "</p>" +
-          // "<p>ties: " + ties + "</p>";
-    var targetDiv = document.getElementById("lives");
-    targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
-                          "<p>losses: " + losses + "</p>" +
-                          "<p>wins: " + wins + "</p>";
-                            
+	
+  
+	
 
-                                                                  ;
-    
-    // document.querySelector("#lives").innerHTML = html;
-    
-    document.onkeyup = function(event) {
 
-        var userGuess = event.key;
-        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+  var reset = document.getElementById("reset");
+  var nextword = document.getElementById("nextword");
+  var targetDiv = document.getElementById("lives");
 
-        
-        for (var i = 0; i < computerGuess.length; i++) {
-          	var dashes = computerGuess.replace(computerGuess[i], " - ");
-          	
-            targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
-                                  "<p>losses: " + losses + "</p>" +
+  targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                        "<p>letters gussed so far: " + letters + "</p>" +
                                   "<p>wins: " + wins + "</p>" +
                                    "<p>" + dashes + "</p>";
-                                   
+ 
 
-            if (userGuess === computerGuess[i]) {
+
+  document.onkeyup = function(event) {
+    
+      userGuess = event.key;
+
+      if (userGuess === computerGuess[0]) {
               alert("great choice ");
               letters.push(userGuess);
-              targetDiv.innerHTML =   "<p>remaining lives: " + lives + "</p>" +
-                                      "<p>losses: " + losses + "</p>" +
-                                      "<p>wins: " + wins + "</p>" +
-                                      "<p>letters gussed so far: " + letters + "</p>" +
-                                      "<p>" + dashes.replace(" - ", userGuess) + "</p>";
-                                     
+              dashes[0] = userGuess;
+              targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                        "<p>letters gussed so far: " + letters + "</p>" +
+                                  "<p>wins: " + wins + "</p>" +
+                                   "<p>" + dashes + "</p>";
+      } 
+      else if (userGuess === computerGuess[1]) {
+              alert("great choice ");
+              letters.push(userGuess);
+              dashes[1] = userGuess;
+              targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                        "<p>letters gussed so far: " + letters + "</p>" +
+                                  "<p>wins: " + wins + "</p>" +
+                                   "<p>" + dashes + "</p>";
+      } 
+      else if (userGuess === computerGuess[2]) {
+              alert("great choice ");
+              letters.push(userGuess);
+              dashes[2] = userGuess;
+              targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                        "<p>letters gussed so far: " + letters + "</p>" +
+                                  "<p>wins: " + wins + "</p>" +
+                                   "<p>" + dashes + "</p>";
+      } 
 
-
-             } 
-             else {
-             	alert("try again");
-             	lives--;
-             	letters.push(userGuess); 
-                targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
-                                      "<p>losses: " + losses + "</p>" +
-                                      "<p>wins: " + wins + "</p>" +
-                                      "<p>letters gussed so far: " + letters + "</p>";
-             }
-             
-            if (userGuess === computerGuess) {
-             	wins++;
-            }
-
-            if (lives === 0) {
-             	losses++;
-             	numOfAttempts--;
-             	alert("AttemptsLeft: " + numOfAttempts);
-
-            }
+      else {
+             	letters.push(userGuess);
+              alert("try again "); 
+              lives = lives - 1;
+              targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                                    "<p>letters gussed so far: " + letters + "</p>" +
+                                    "<p>wins: " + wins + "</p>" +
+                                    "<p>" + dashes + "</p>"; 
+      }
+      
             
-            if (numOfAttempts < 1) {
-            	alert("game over");
-            	alert("press reset to play again");
+      if (lives <= 0) {
+        alert("you loose! Press reset to play again");
+      }
+      
+      if (dashes[0] === computerGuess[0] && dashes[1] === computerGuess[1] && dashes[2] === computerGuess[2]) {
 
-            }
-              
-        }
+        wins++;
+        targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                            "<p>letters gussed so far: " + letters + "</p>" +
+                            "<p>wins: " + wins + "</p>" +
+                            "<p>" + dashes + "</p>";
+        alert("you win! press guess next word");
+        
+      }     
+  }           
+     
 
-       
+  
 
-        // alert("user guess: " + userGuess);
-        // alert("computer guess: " + computerGuess);
 
-    };
-
-    reset.onclick = function() {
+  
+  reset.onclick = function() {
     	lives = 5;
-    	losses = 0;
     	wins = 0;
     	letters = [];
-    	numOfAttempts = 3;
+      dashes = ["-","-","-"];
+    	
     	targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
-                          "<p>losses: " + losses + "</p>" +
-                          "<p>wins: " + wins + "</p>";
+                            "<p>letters gussed so far: " + letters + "</p>" +
+                            "<p>wins: " + wins + "</p>" +
+                            "<p>" + dashes + "</p>";
+  }
 
 
-    }
+  nextword.onclick = function() {
+      letters = [];
+      dashes = ["-","-","-"];
+      targetDiv.innerHTML = "<p>remaining lives: " + lives + "</p>" +
+                            "<p>letters gussed so far: " + letters + "</p>" +
+                            "<p>wins: " + wins + "</p>" +
+                            "<p>" + dashes + "</p>";
+  }
+    
+  
        
 
 </script>
